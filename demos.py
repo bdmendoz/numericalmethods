@@ -1,6 +1,6 @@
 # Description: This file contains the implementation of the bisection method and newton method for finding the root of a function.
 from numethodsw1 import *
-
+from interpolatingPolynomials import *
 def bisection_method():
     print("Bisection method selected.")
     f=lambda x: 10*x**4-3*x*exp(x)-3*exp(x)
@@ -75,6 +75,27 @@ def fixedpoint_method_quiz2():
     tol=1e-8
     n=100
     print("Root of the function is:", fixedpointmethod(f, p0, tol, n))
+def interpolating_newton():
+    datos=[(3.0, 2310),(5.0, 3090),(7.0, 3940),(20.0, 8000)]
+    # datos= [(-1.0,2.0),(0.0,-1.0),(1.0,1.0),(2.0,-2.0)]
+    T, P= newtonPol(datos)
+    print("Newton Polynomial")
+    print("Table of divided differences")
+    pprint(T)
+    print("Interpolating Polynomial terms")
+    # get T Evaluated in [i][i]
+    terms = [T[i][i] for i in range(len(T))]
+    print(terms)
+    print("evaluating the polynomial in x=4")
+    print(P(4))
+
+def interpolating_lagrange():
+    datosf= [(0.0, -3.0), (1.0, 0.0),(3.0, 5.0), (6.0,7.0)]
+    Pf = lagrangePol(datosf)
+    print("Lagrange Polynomial")
+    print ("evaluating lagrange Polynomial  in x=1.8")
+    print(Pf(1.8))
+
 def main():
     while True:
         print("Select a numerical method:")
@@ -82,14 +103,11 @@ def main():
         print("2. Newton Method")
         print("3. Secant Method")
         print("4. Fixed Point Method")
-        print("5. Newton for QUIZ!!!")
-        print("6. Fixed Point for QUIZ!!!")
-        print("7. Fixed Point for QUIZ 2!!!")
-        print("8. newton for QUIZ 2!!!")
-        print("9. Secant for QUIZ!!!")
+        print("5. Interpolating Newton Polynomial")
+        print("6. Interpolating Lagrange Polynomial")
         print("0:exit")
         
-        choice = input("Enter your choice (1/2/3/4/5/6/7/7): ")
+        choice = input("Enter your choice (1/2/3/4/5): ")
         
         if choice == '1':
             bisection_method()
@@ -100,15 +118,9 @@ def main():
         elif choice == '4':
             fixedpoint_method()
         elif choice == '5':
-            newton_method_quiz()
+            interpolating_newton()
         elif choice == '6':
-            fixedpoint_method_quiz()
-        elif choice == '7':
-            fixedpoint_method_quiz2()
-        elif choice == '8':
-            newton_method_quiz2()
-        elif choice == '9':
-            secant_method_quiz()
+            interpolating_lagrange()
         elif choice == '0':
             print("Exiting the program.")
             break
